@@ -7,13 +7,21 @@
 
 ==Ideas==
 
-    Difficulty Slider     (Added)
+    
     Convert Townspeople
-    Win??
-    Passivly Goes down to overthrow you        (Done)
-    You are a king                          (IDK why this is in here)
-    You have to get the townspeople to agree to policy which would raise cliamte change
+    
+
+    
+    
     Enemies give actual facts, you spew retoric
+
+
+==Done Ideas==
+    Difficulty Slider     (Added)
+    Passivly Goes down to overthrow you        (Done)
+    You are a king        (IDK why this is in here)
+    You have to get the townspeople to agree to policy which would raise cliamte change
+    Win??
 
 Due on Thursday.
 

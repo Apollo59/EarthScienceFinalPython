@@ -24,6 +24,8 @@ angerpercent = 0
 townspeople = 100
 pow1timeout = 0
 message = ""
+dissmessage = ""
+dissentTimeOut = 0
 
 
 agreersSTR = str(agreers)
@@ -39,6 +41,7 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 blue = (0, 0, 255)
 backgroundcolor = (40, 40, 40)
+green = (0, 255, 0)
 
 
 text = GAME_FONT.render(agreersSTR, True, red, blue)
@@ -50,6 +53,11 @@ textRect = text.get_rect()
 def Power2():
     print("Nothing Yet")
 
+
+def win():
+    screen.fill(white)
+    winrender = GAME_FONT.render("YOU WIN", True, black)
+    screen.blit(winrender, (425, 325))
 
 
 
@@ -112,17 +120,40 @@ while running:
             screen.fill(backgroundcolor)
             fontrender = GAME_FONT.render(agreersSTR + "/100", True, white)
             screen.blit(fontrender, (0, 0))
-            lastmessagerender = GAME_FONT.render(message, True, white)
+            lastmessagerender = GAME_FONT.render(message, True, green)
             screen.blit(lastmessagerender, (0, 100))
+            dissmessagerend = GAME_FONT.render(dissmessage, True, red)
+            screen.blit(dissmessagerend, (0, 615))
             agreersSTR = str(agreers)
+
+#Abilities/Propaganda/MakeNumberGoUp
+
             if keys[pygame.K_a]:
                 if pow1timeout == 0:
                     print("Lying to people")
-                    message = "Oil is good for you."
+                    message = "Oil is good for you, I drink it everyday"
                     agreers = agreers + 3
                     pow1timeout = 300
             if pow1timeout > 0:
                 pow1timeout = pow1timeout - 1
+                pow1timeoutstr = str(pow1timeout)
+                pow1timeoutrender = GAME_FONT.render(pow1timeoutstr, True, white)
+                screen.blit(pow1timeoutrender, (950, 0))
+            if keys[pygame.K_s]:
+                if pow1timeout == 0:
+                    print("Lying to people")
+                    message = "Windmills cause cancer"
+                    agreers = agreers + 2
+                    pow1timeout = 300
+            if pow1timeout > 0:
+                pow1timeout = pow1timeout - 1
+                pow1timeoutstr = str(pow1timeout)
+                pow1timeoutrender = GAME_FONT.render(pow1timeoutstr, True, white)
+                screen.blit(pow1timeoutrender, (950, 0))
+
+
+
+
             if dissrate == 600:
                 angerpercent = 1
                 dissrate = 0
@@ -136,8 +167,23 @@ while running:
                 dissrate = 0
 
 #Dissenter Chance
+            if dissentTimeOut == 0:
+                disschance = randint(1, 10)
+                if disschance == 3:
+                    agreers = agreers - 1
+                    distmessagechance = randint (1, 4)
+                    dissentTimeOut = 600
+                    if distmessagechance == 1:
+                        dissmessage = "Oil Drilling Harms Wildlife"
+                    if distmessagechance == 2:
+                        dissmessage = "Fraking Pollutes the water"
+                    if distmessagechance == 3:
+                        dissmessage = "Renewables are cheaper for you"
+                    if distmessagechance == 4:
+                        dissmessage = "Solar Panels are not seasonal"
 
-
+            if dissentTimeOut > 0:
+                dissentTimeOut = dissentTimeOut - 1
             pygame.display.update()
             print(agreers)
             clock.tick(60)
