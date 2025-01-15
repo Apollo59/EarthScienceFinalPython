@@ -3,6 +3,7 @@ import sys
 from pygame.locals import *
 import pygame.freetype
 from random import randint
+import random
 import time
 
 pygame.init()
@@ -32,6 +33,8 @@ pow3timeout = 0
 elpasedtime = 1
 pow4timeout = 0
 pow5timeout = 0
+
+pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming"]
 
 
 agreersSTR = str(agreers)
@@ -122,12 +125,14 @@ while running:
     if diffselect != 0:
         if splashscreen == 0:    #Draw
             screen.blit(background, (0, 0))
-            fontrender = GAME_FONT.render(agreersSTR + "/" + str(townspeople), True, black)
-            screen.blit(fontrender, (0, 0))
+            fontrender = GAME_FONT.render(agreersSTR, True, black)
+            screen.blit(fontrender, (825, 205))
+            townspeoplerender = GAME_FONT.render(str(townspeople), True, black)
+            screen.blit(townspeoplerender, (910, 205))
             lastmessagerender = GAME_FONT.render(message, True, black)
-            screen.blit(lastmessagerender, (10, 270))
+            screen.blit(lastmessagerender, (10, 200))
             dissmessagerend = GAME_FONT.render(dissmessage, True, black)
-            screen.blit(dissmessagerend, (10, 500))
+            screen.blit(dissmessagerend, (10, 425))
             agreersSTR = str(agreers)
 
 #Abilities/Propaganda/MakeNumberGoUp
@@ -135,7 +140,7 @@ while running:
             if keys[pygame.K_a]:
                 if pow1timeout == 0:
                     print("Lying to people")
-                    message = "Oil is good for you, I drink it everyday"
+                    message = random.choice(pow1messages)
                     agreers = agreers + 3
                     pow1timeout = 300
             if pow1timeout > 0:
@@ -143,23 +148,23 @@ while running:
                 pow1timeoutstr = str(pow1timeout)
                 pow1timeoutrender = GAME_FONT.render(pow1timeoutstr, True, black)
                 screen.blit(pow1timeoutrender, (950, 0))
-            if keys[pygame.K_s]:
-                if pow2timeout == 0:
-                    print("Lying to people")
-                    message = "Windmills cause cancer"
-                    agreers = agreers + 2
-                    pow2timeout = 300
-            if pow2timeout > 0:
-                pow2timeout = pow2timeout - 1
-                pow2timeoutstr = str(pow2timeout)
-                pow2timeoutrender = GAME_FONT.render(pow2timeoutstr, True, black)
-                screen.blit(pow2timeoutrender, (950, 20))
-            if keys[pygame.K_d]:
-                if pow3timeout == 0:
-                    print("Lying to people")
-                    message = "Snow disproves Global Warming"
-                    agreers = agreers + 2
-                    pow3timeout = 300
+#            if keys[pygame.K_s]:
+#                if pow2timeout == 0:
+#                    print("Lying to people")
+#                    message = ""
+#                    agreers = agreers + 2
+#                    pow2timeout = 300
+#            if pow2timeout > 0:
+#                pow2timeout = pow2timeout - 1
+#                pow2timeoutstr = str(pow2timeout)
+#                pow2timeoutrender = GAME_FONT.render(pow2timeoutstr, True, black)
+#                screen.blit(pow2timeoutrender, (950, 20))
+#            if keys[pygame.K_d]:
+#                if pow3timeout == 0:
+#                    print("Lying to people")
+#                    message = ""
+#                    agreers = agreers + 2
+#                    pow3timeout = 300
             if pow3timeout > 0:
                 pow3timeout = pow3timeout - 1
                 pow3timeoutstr = str(pow3timeout)
@@ -204,14 +209,14 @@ while running:
             if agreers <= 0:
                 lose()
                 dissrate = 0
-            if agreers >= 100:
-                win()
                 if elpasedtime == 3:
                     sys.exit()
                     print("Leaving")
                 else:
                     time.sleep(1)
                     elpasedtime = elpasedtime + 1
+            if agreers >= 100:
+                win()
 
 #Dissenter Chance
             if dissentTimeOut == 0:
