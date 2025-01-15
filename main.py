@@ -33,6 +33,7 @@ pow3timeout = 0
 elpasedtime = 1
 pow4timeout = 0
 pow5timeout = 0
+policySelect = 0
 
 pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming"]
 
@@ -123,124 +124,125 @@ while running:
             pygame.display.update()
 
     if diffselect != 0:
-        if splashscreen == 0:    #Draw
-            screen.blit(background, (0, 0))
-            fontrender = GAME_FONT.render(agreersSTR, True, black)
-            screen.blit(fontrender, (825, 205))
-            townspeoplerender = GAME_FONT.render(str(townspeople), True, black)
-            screen.blit(townspeoplerender, (910, 205))
-            lastmessagerender = GAME_FONT.render(message, True, black)
-            screen.blit(lastmessagerender, (10, 200))
-            dissmessagerend = GAME_FONT.render(dissmessage, True, black)
-            screen.blit(dissmessagerend, (10, 425))
-            agreersSTR = str(agreers)
+        if splashscreen == 0: 
+            if policySelect == 0:   #Draw
+                screen.blit(background, (0, 0))
+                fontrender = GAME_FONT.render(agreersSTR, True, black)
+                screen.blit(fontrender, (825, 205))
+                townspeoplerender = GAME_FONT.render(str(townspeople), True, black)
+                screen.blit(townspeoplerender, (910, 205))
+                lastmessagerender = GAME_FONT.render(message, True, black)
+                screen.blit(lastmessagerender, (10, 200))
+                dissmessagerend = GAME_FONT.render(dissmessage, True, black)
+                screen.blit(dissmessagerend, (10, 425))
+                agreersSTR = str(agreers)
 
 #Abilities/Propaganda/MakeNumberGoUp
 
-            if keys[pygame.K_a]:
-                if pow1timeout == 0:
-                    print("Lying to people")
-                    message = random.choice(pow1messages)
-                    agreers = agreers + 3
-                    pow1timeout = 300
-            if pow1timeout > 0:
-                pow1timeout = pow1timeout - 1
-                pow1timeoutstr = str(pow1timeout)
-                pow1timeoutrender = GAME_FONT.render(pow1timeoutstr, True, black)
-                screen.blit(pow1timeoutrender, (950, 0))
-#            if keys[pygame.K_s]:
-#                if pow2timeout == 0:
-#                    print("Lying to people")
-#                    message = ""
-#                    agreers = agreers + 2
-#                    pow2timeout = 300
-#            if pow2timeout > 0:
-#                pow2timeout = pow2timeout - 1
-#                pow2timeoutstr = str(pow2timeout)
-#                pow2timeoutrender = GAME_FONT.render(pow2timeoutstr, True, black)
-#                screen.blit(pow2timeoutrender, (950, 20))
-#            if keys[pygame.K_d]:
-#                if pow3timeout == 0:
-#                    print("Lying to people")
-#                    message = ""
-#                    agreers = agreers + 2
-#                    pow3timeout = 300
-            if pow3timeout > 0:
-                pow3timeout = pow3timeout - 1
-                pow3timeoutstr = str(pow3timeout)
-                pow3timeoutrender = GAME_FONT.render(pow3timeoutstr, True, black)
-                screen.blit(pow3timeoutrender, (950, 40))
-            if keys[pygame.K_f]:
-                if pow4timeout == 0:
-                    print("Jailing people")
-                    message = "Maybe you will learn your lesson"
-                    agreers = agreers + 2
-                    townspeople = townspeople - 1
-                    pow4timeout = 300
-            if pow4timeout > 0:
-                pow4timeout = pow4timeout - 1
-                pow4timeoutstr = str(pow4timeout)
-                pow4timeoutrender = GAME_FONT.render(pow4timeoutstr, True, black)
-                screen.blit(pow4timeoutrender, (950, 60))
-            if keys[pygame.K_g]:
-                if pow5timeout == 0:
-                    print("Bribes")
-                    message = "Money speaks louder than words"
-                    agreers = agreers + 2
-                    townspeople = townspeople - 1
-                    pow5timeout = 300
-            if pow5timeout > 0:
-                pow5timeout = pow5timeout - 1
-                pow5timeoutstr = str(pow5timeout)
-                pow5timeoutrender = GAME_FONT.render(pow5timeoutstr, True, black)
-                screen.blit(pow5timeoutrender, (950, 80))
+                if keys[pygame.K_a]:
+                    if pow1timeout == 0:
+                        print("Lying to people")
+                        message = random.choice(pow1messages)
+                        agreers = agreers + 3
+                        pow1timeout = 300
+                if pow1timeout > 0:
+                    pow1timeout = pow1timeout - 1
+                    pow1timeoutstr = str(pow1timeout)
+                    pow1timeoutrender = GAME_FONT.render(pow1timeoutstr, True, black)
+                    screen.blit(pow1timeoutrender, (950, 0))
+#                if keys[pygame.K_s]:
+#                    if pow2timeout == 0:
+#                        print("Lying to people")
+#                        message = ""
+#                        agreers = agreers + 2
+#                        pow2timeout = 300
+#                if pow2timeout > 0:
+#                    pow2timeout = pow2timeout - 1
+#                    pow2timeoutstr = str(pow2timeout)
+#                    pow2timeoutrender = GAME_FONT.render(pow2timeoutstr, True, black)
+#                    screen.blit(pow2timeoutrender, (950, 20))
+#                if keys[pygame.K_d]:
+#                    if pow3timeout == 0:
+#                        print("Lying to people")
+#                        message = ""
+#                        agreers = agreers + 2
+#                        pow3timeout = 300
+                if pow3timeout > 0:
+                    pow3timeout = pow3timeout - 1
+                    pow3timeoutstr = str(pow3timeout)
+                    pow3timeoutrender = GAME_FONT.render(pow3timeoutstr, True, black)
+                    screen.blit(pow3timeoutrender, (950, 40))
+                if keys[pygame.K_f]:
+                    if pow4timeout == 0:
+                        print("Jailing people")
+                        message = "Maybe you will learn your lesson"
+                        agreers = agreers + 2
+                        townspeople = townspeople - 1
+                        pow4timeout = 300
+                if pow4timeout > 0:
+                    pow4timeout = pow4timeout - 1
+                    pow4timeoutstr = str(pow4timeout)
+                    pow4timeoutrender = GAME_FONT.render(pow4timeoutstr, True, black)
+                    screen.blit(pow4timeoutrender, (950, 60))
+                if keys[pygame.K_g]:
+                    if pow5timeout == 0:
+                        print("Bribes")
+                        message = "Money speaks louder than words"
+                        agreers = agreers + 2
+                        townspeople = townspeople - 1
+                        pow5timeout = 300
+                if pow5timeout > 0:
+                    pow5timeout = pow5timeout - 1
+                    pow5timeoutstr = str(pow5timeout)
+                    pow5timeoutrender = GAME_FONT.render(pow5timeoutstr, True, black)
+                    screen.blit(pow5timeoutrender, (950, 80))
 
 
 
 
-            if dissrate == dissratemax:
-                angerpercent = 1
-                dissrate = 0
-            else:
-                angerpercent = 0
-                dissrate = dissrate + 1
-            if angerpercent == 1:
-                agreers = agreers - 1
-            if agreers <= 0:
-                lose()
-                dissrate = 0
-                if elpasedtime == 3:
-                    sys.exit()
-                    print("Leaving")
+                if dissrate == dissratemax:
+                    angerpercent = 1
+                    dissrate = 0
                 else:
-                    time.sleep(1)
-                    elpasedtime = elpasedtime + 1
-            if agreers >= 100:
-                win()
+                    angerpercent = 0
+                    dissrate = dissrate + 1
+                if angerpercent == 1:
+                    agreers = agreers - 1
+                if agreers <= 0:
+                    lose()
+                    dissrate = 0
+                    if elpasedtime == 3:
+                        sys.exit()
+                        print("Leaving")
+                    else:
+                        time.sleep(1)
+                        elpasedtime = elpasedtime + 1
+                if agreers >= 100:
+                    win()
 
 #Dissenter Chance
-            if dissentTimeOut == 0:
-                disschance = randint(1, 10)
-                if disschance == 3:
-                    agreers = agreers - 1
-                    distmessagechance = randint (1, 6)
-                    dissentTimeOut = 400
-                    if distmessagechance == 1:
-                        dissmessage = "Oil Drilling Harms Wildlife"
-                    if distmessagechance == 2:
-                        dissmessage = "Fraking pollutes water"
-                    if distmessagechance == 3:
-                        dissmessage = "Renewables are cheaper for you"
-                    if distmessagechance == 4:
-                        dissmessage = "Solar Panels are not seasonal"
-                    if distmessagechance == 5:
-                        dissmessage = "Oil Refineries spew out toxic gas"
-                    if distmessagechance == 6:
-                        dissmessage = "Global Warming causes extermes on both ends"
+                if dissentTimeOut == 0:
+                    disschance = randint(1, 10)
+                    if disschance == 3:
+                        agreers = agreers - 1
+                        distmessagechance = randint (1, 6)
+                        dissentTimeOut = 400
+                        if distmessagechance == 1:
+                            dissmessage = "Oil Drilling Harms Wildlife"
+                        if distmessagechance == 2:
+                            dissmessage = "Fraking pollutes water"
+                        if distmessagechance == 3:
+                            dissmessage = "Renewables are cheaper for you"
+                        if distmessagechance == 4:
+                            dissmessage = "Solar Panels are not seasonal"
+                        if distmessagechance == 5:
+                            dissmessage = "Oil Refineries spew out toxic gas"
+                        if distmessagechance == 6:
+                            dissmessage = "Global Warming causes extermes on both ends"
 
-            if dissentTimeOut > 0:
-                dissentTimeOut = dissentTimeOut - 1
-                print(dissentTimeOut)
+                if dissentTimeOut > 0:
+                    dissentTimeOut = dissentTimeOut - 1
+                    print(dissentTimeOut)
             pygame.display.update()
             #print(agreers)
             clock.tick(60)
