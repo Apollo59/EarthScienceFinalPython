@@ -33,7 +33,7 @@ pow3timeout = 0
 elpasedtime = 1
 pow4timeout = 0
 pow5timeout = 0
-policySelect = 0
+policySelect = False
 
 pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming"]
 
@@ -44,6 +44,7 @@ agreersSTR = str(agreers)
 introScreen = pygame.image.load('intro.png')
 diffselectscreen = pygame.image.load('diffselectscreen.png')
 background = pygame.image.load('background.png')
+policyBackground = pygame.image.load('policybackground.png')
 
 
 #Colors
@@ -125,7 +126,7 @@ while running:
 
     if diffselect != 0:
         if splashscreen == 0: 
-            if policySelect == 0:   #Draw
+            if policySelect == False:   #Draw
                 screen.blit(background, (0, 0))
                 fontrender = GAME_FONT.render(agreersSTR, True, black)
                 screen.blit(fontrender, (825, 205))
@@ -179,6 +180,11 @@ while running:
                         agreers = agreers + 2
                         townspeople = townspeople - 1
                         pow4timeout = 300
+                if keys[pygame.K_p]:
+                    if policySelect == True:
+                        policySelect = not policySelect
+                    if policySelect == False:
+                        policySelect = not policySelect
                 if pow4timeout > 0:
                     pow4timeout = pow4timeout - 1
                     pow4timeoutstr = str(pow4timeout)
@@ -246,3 +252,8 @@ while running:
             pygame.display.update()
             #print(agreers)
             clock.tick(60)
+    if diffselect != 0:
+        if splashscreen == 0: 
+            if policySelect == False:
+                screen.blit(policyBackground, (200, 125))
+            
