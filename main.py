@@ -9,6 +9,7 @@ import time
 pygame.init()
 pygame.display.init()
 GAME_FONT = pygame.font.Font("Montserrat-Regular.ttf", 24)
+numberFont = pygame.font.Font("PixelifySans-Bold.ttf", 24)
 running = True
 
 #BASIC
@@ -72,6 +73,12 @@ def lose():
     screen.blit(loserender, (500, 325))
 
 
+#Policies
+def oilContracts():
+    townspeople = townspeople - 1
+    agreers = agreers + 1
+
+
 
 
 #Main Loop
@@ -79,12 +86,56 @@ while running:
 
     keys = pygame.key.get_pressed()
 
-
-    
     #Quit
     for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        if event.type == pygame.QUIT:
+            running = False
+
+
+
+
+
+        #Policy 789, 262 -> 860, 335
+        if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = pygame.mouse.get_pos()
+                #Policy
+                if x >= 789:
+                    if x <= 860:
+                        if y >= 262:
+                            if y<= 335:
+                                policySelect = True
+                # Bribes 916, 262 -> 987, 335
+                if x >= 916:
+                    if x <= 987:
+                        if y >= 262:
+                            if y<= 335:
+                                if pow5timeout == 0:
+                                    print("Bribes")
+                                    message = "Money speaks louder than words"
+                                    agreers = agreers + 2
+                                    townspeople = townspeople - 1
+                                    pow5timeout = 300
+                # Reuse 789, 110 -> 860, 183
+                if x >= 789:
+                    if x <= 860:
+                        if y >= 110:
+                            if y<= 183:
+                                if pow1timeout == 0:
+                                    print("Lying to people")
+                                    message = random.choice(pow1messages)
+                                    agreers = agreers + 3
+                                    pow1timeout = 300
+                # Jail Button 916, 110 -> 987, 183
+                if x >= 916:
+                    if x <= 987:
+                        if y >= 110:
+                            if y <= 183:
+                                if pow4timeout == 0:
+                                    message = "Maybe you will learn your lesson"
+                                    agreers = agreers + 2
+                                    townspeople = townspeople - 1
+                                    pow4timeout = 300
+                                    print("Jailing")
 
     #SplashScreen
     if intro <= 500:
@@ -95,6 +146,7 @@ while running:
     else:
         splashscreen = 0
 
+    #DiffSelection
     if splashscreen == 0:
         if diffselect == 0:
             screen.blit(diffselectscreen, (0, 0))
@@ -124,13 +176,25 @@ while running:
                 dissratemax = 150
             pygame.display.update()
 
+    #Policy
+    if diffselect != 0:
+        if splashscreen == 0: 
+            if policySelect == True:
+                screen.blit(policyBackground, (200, 125))
+                if keys[pygame.K_p]:
+                    policySelect = False
+                print("Policy Time")
+                pygame.display.update()
+                clock.tick(60)
+
+    #Main
     if diffselect != 0:
         if splashscreen == 0: 
             if policySelect == False:   #Draw
                 screen.blit(background, (0, 0))
-                fontrender = GAME_FONT.render(agreersSTR, True, black)
+                fontrender = numberFont.render(agreersSTR, True, black)
                 screen.blit(fontrender, (825, 205))
-                townspeoplerender = GAME_FONT.render(str(townspeople), True, black)
+                townspeoplerender = numberFont.render(str(townspeople), True, black)
                 screen.blit(townspeoplerender, (910, 205))
                 lastmessagerender = GAME_FONT.render(message, True, black)
                 screen.blit(lastmessagerender, (10, 200))
@@ -180,16 +244,8 @@ while running:
                         agreers = agreers + 2
                         townspeople = townspeople - 1
                         pow4timeout = 300
-                if keys[pygame.K_p]:
-                    if policySelect == True:
-                        policySelect = not policySelect
-                    if policySelect == False:
-                        policySelect = not policySelect
-                if pow4timeout > 0:
-                    pow4timeout = pow4timeout - 1
-                    pow4timeoutstr = str(pow4timeout)
-                    pow4timeoutrender = GAME_FONT.render(pow4timeoutstr, True, black)
-                    screen.blit(pow4timeoutrender, (950, 60))
+                if keys[pygame.K_o]:
+                    policySelect = True
                 if keys[pygame.K_g]:
                     if pow5timeout == 0:
                         print("Bribes")
@@ -201,7 +257,7 @@ while running:
                     pow5timeout = pow5timeout - 1
                     pow5timeoutstr = str(pow5timeout)
                     pow5timeoutrender = GAME_FONT.render(pow5timeoutstr, True, black)
-                    screen.blit(pow5timeoutrender, (950, 80))
+                    screen.blit(pow5timeoutrender, (950, 60))
 
 
 
@@ -248,12 +304,11 @@ while running:
 
                 if dissentTimeOut > 0:
                     dissentTimeOut = dissentTimeOut - 1
-                    print(dissentTimeOut)
+#                    print(dissentTimeOut)
+                
             pygame.display.update()
             #print(agreers)
             clock.tick(60)
-    if diffselect != 0:
-        if splashscreen == 0: 
-            if policySelect == False:
-                screen.blit(policyBackground, (200, 125))
+    
+
             
