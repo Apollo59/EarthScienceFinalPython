@@ -37,6 +37,11 @@ pow4timeout = 0
 pow5timeout = 0
 policySelect = False
 jailed = 0
+oilowned = 1
+downwindmills = 0
+Canso = 0
+noEDU = 0
+changeFromPolicy = 400
 
 pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming"]
 
@@ -48,6 +53,7 @@ introScreen = pygame.image.load('intro.png')
 diffselectscreen = pygame.image.load('diffselectscreen.png')
 background = pygame.image.load('background.png')
 policyBackground = pygame.image.load('policybackground.png')
+owned = pygame.image.load('owned.png')
 
 
 #Colors
@@ -76,28 +82,45 @@ def lose():
 def oilContracts():
     global townspeople
     global agreers
+    global oilowned
+    global changeFromPolicy
     townspeople = townspeople - 1
     agreers = agreers + 1
+    oilowned = 1
+    changeFromPolicy = 350
+
 
 def teardownWindmills():
     global townspeople
     global agreers
+    global downwindmills
+    global changeFromPolicy
     townspeople = townspeople + 1
     agreers = agreers - 1
+    downwindmills = 1
+    changeFromPolicy = 325
 
 def ICanSo():
     global townspeople
     global agreers
     global message
+    global Canso
+    global changeFromPolicy
     townspeople = townspeople - 2
     agreers = agreers + 2
     message = "You cant stop me I'm the king"
+    Canso = 1
+    changeFromPolicy = 300
 
 def RemoveEducation():
     global townspeople
     global agreers
+    global noEDU
+    global changeFromPolicy
     townspeople = townspeople - 1 
     agreers = agreers + 2
+    noEDU = 1
+    changeFromPolicy = 425
 
 
 def revolt():
@@ -213,13 +236,33 @@ while running:
                 if keys[pygame.K_p]:
                     policySelect = False
                 if keys[pygame.K_q]:
-                    oilContracts()
+                    if oilowned == 1:
+                        print("NO")
+                    if oilowned == 0:
+                        oilContracts()
                 if keys[pygame.K_w]:
-                    teardownWindmills()
+                    if downwindmills == 1:
+                        print("No")
+                    if downwindmills == 0:
+                        teardownWindmills()
                 if keys[pygame.K_e]:
-                    ICanSo()
+                    if Canso == 1:
+                        print("No")
+                    if Canso == 0:
+                        ICanSo()
                 if keys[pygame.K_r]:
-                    RemoveEducation()
+                    if noEDU == 1:
+                        print("NO")
+                    if noEDU == 0:
+                        RemoveEducation()
+                if oilowned == 1:
+                    screen.blit(owned, (300, 150))
+                if downwindmills == 1:
+                    screen.blit(owned, (384, 150))
+                if Canso == 1:
+                    screen.blit(owned, (475, 150))
+                if noEDU == 1:
+                    screen.blit(owned, (560, 150))
 #                print("Policy Time")
                 pygame.display.update()
                 clock.tick(60)
@@ -331,7 +374,7 @@ while running:
                     if disschance == 3:
                         agreers = agreers - 1
                         distmessagechance = randint (1, 6)
-                        dissentTimeOut = 400
+                        dissentTimeOut = changeFromPolicy
                         if distmessagechance == 1:
                             dissmessage = "Oil Drilling Harms Wildlife"
                         if distmessagechance == 2:
@@ -343,7 +386,7 @@ while running:
                         if distmessagechance == 5:
                             dissmessage = "Oil Refineries spew out toxic gas"
                         if distmessagechance == 6:
-                            dissmessage = "Global Warming causes extermes on both ends"
+                            dissmessage = "Global Warming causes extermes \n on both ends"
 
                 if dissentTimeOut > 0:
                     dissentTimeOut = dissentTimeOut - 1
