@@ -13,6 +13,15 @@ numberFont = pygame.font.Font("Tiny5-Regular.ttf", 24)
 cooldownFont = pygame.font.Font("Tiny5-Regular.ttf", 16)
 running = True
 
+
+
+#Globals
+global townspeople
+global agreers
+global jailed
+global diff
+
+
 #BASIC
 pygame.display.set_caption('Earth Science Final Project')
 clock = pygame.time.Clock()
@@ -76,6 +85,22 @@ def lose():
 def oilContracts():
     townspeople = townspeople - 1
     agreers = agreers + 1
+    print("Oil Contracts")
+
+def banEducation():
+    townspeople = townspeople - 1
+    agreers = agreers + 2
+    print("Banning")
+
+def frakingContracts():
+    townspeople = townspeople + 1
+    agreers = agreers + 2
+    print("Fraking")
+
+def mineCoal():
+    townspeople = townspeople + 1
+    agreers = agreers + 3
+    print("Coal")
 
 
 def revolt():
@@ -89,6 +114,7 @@ def revolt():
 
 #Main Loop
 while running:
+
 
     keys = pygame.key.get_pressed()
 
@@ -191,6 +217,25 @@ while running:
                 if keys[pygame.K_p]:
                     policySelect = False
                 print("Policy Time")
+                #54, 197 -> 90, 233
+                #143, 179
+                #231, 267
+                #316, 352
+                if y >= 322:
+                    if y <= 348:
+                        if x >= 254:
+                            if x <= 290:
+                                oilContracts()
+                        if x >= 343:
+                            if x <= 397:
+                                banEducation()
+                        if x >= 431:
+                            if x <= 467:
+                                frakingContracts()
+                        if x >= 516:
+                            if x <= 552:
+                                mineCoal()
+
                 pygame.display.update()
                 clock.tick(60)
 
