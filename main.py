@@ -78,6 +78,18 @@ def oilContracts():
     townspeople = townspeople - 1
     agreers = agreers + 1
 
+def teardownWindmills():
+    townspeople = townspeople + 1
+    agreers = agreers - 1
+
+def ICanSo():
+    townspeople = townspeople - 2
+    agreers = agreers + 2
+
+def RemoveEducation():
+    townspeople = townspeople - 1 
+    agreers = agreers + 2
+
 
 
 
@@ -279,7 +291,7 @@ while running:
                     else:
                         time.sleep(1)
                         elpasedtime = elpasedtime + 1
-                if agreers >= 100:
+                if agreers >= townspeople:
                     win()
 
 #Dissenter Chance
