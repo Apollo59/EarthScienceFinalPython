@@ -74,18 +74,28 @@ def lose():
 
 #Policies
 def oilContracts():
+    global townspeople
+    global agreers
     townspeople = townspeople - 1
     agreers = agreers + 1
 
 def teardownWindmills():
+    global townspeople
+    global agreers
     townspeople = townspeople + 1
     agreers = agreers - 1
 
 def ICanSo():
+    global townspeople
+    global agreers
+    global message
     townspeople = townspeople - 2
     agreers = agreers + 2
+    message = "You cant stop me I'm the king"
 
 def RemoveEducation():
+    global townspeople
+    global agreers
     townspeople = townspeople - 1 
     agreers = agreers + 2
 
@@ -202,7 +212,15 @@ while running:
                 screen.blit(policyBackground, (200, 125))
                 if keys[pygame.K_p]:
                     policySelect = False
-                print("Policy Time")
+                if keys[pygame.K_q]:
+                    oilContracts()
+                if keys[pygame.K_w]:
+                    teardownWindmills()
+                if keys[pygame.K_e]:
+                    ICanSo()
+                if keys[pygame.K_r]:
+                    RemoveEducation()
+#                print("Policy Time")
                 pygame.display.update()
                 clock.tick(60)
 
