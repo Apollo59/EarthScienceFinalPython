@@ -9,7 +9,8 @@ import time
 pygame.init()
 pygame.display.init()
 GAME_FONT = pygame.font.Font("Montserrat-Regular.ttf", 24)
-numberFont = pygame.font.Font("PixelifySans-Bold.ttf", 24)
+numberFont = pygame.font.Font("Tiny5-Regular.ttf", 24)
+cooldownFont = pygame.font.Font("Tiny5-Regular.ttf", 16)
 running = True
 
 #BASIC
@@ -35,6 +36,7 @@ elpasedtime = 1
 pow4timeout = 0
 pow5timeout = 0
 policySelect = False
+jailed = 0
 
 pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming"]
 
@@ -57,9 +59,6 @@ green = (0, 255, 0)
 
 
 #ActualThings
-
-
-
 def win():
     screen.fill(white)
     winrender = GAME_FONT.render("YOU WIN, YOU HAVE BOILED THE WORLD", True, black)
@@ -89,6 +88,13 @@ def ICanSo():
 def RemoveEducation():
     townspeople = townspeople - 1 
     agreers = agreers + 2
+
+
+def revolt():
+    if agreers >= jailed:
+        win()
+    if agreers <= jailed:
+        lose()
 
 
 
@@ -147,6 +153,7 @@ while running:
                                     agreers = agreers + 2
                                     townspeople = townspeople - 1
                                     pow4timeout = 300
+                                    jailed = jailed + 1
                                     print("Jailing")
 
     #SplashScreen
@@ -225,8 +232,8 @@ while running:
                 if pow1timeout > 0:
                     pow1timeout = pow1timeout - 1
                     pow1timeoutstr = str(pow1timeout)
-                    pow1timeoutrender = GAME_FONT.render(pow1timeoutstr, True, black)
-                    screen.blit(pow1timeoutrender, (950, 0))
+                    pow1timeoutrender = cooldownFont.render(pow1timeoutstr, True, black)
+                    screen.blit(pow1timeoutrender, (816, 29))
 #                if keys[pygame.K_s]:
 #                    if pow2timeout == 0:
 #                        print("Lying to people")
@@ -244,18 +251,24 @@ while running:
 #                        message = ""
 #                        agreers = agreers + 2
 #                        pow3timeout = 300
-                if pow3timeout > 0:
-                    pow3timeout = pow3timeout - 1
-                    pow3timeoutstr = str(pow3timeout)
-                    pow3timeoutrender = GAME_FONT.render(pow3timeoutstr, True, black)
-                    screen.blit(pow3timeoutrender, (950, 40))
+#                   if pow3timeout > 0:
+#                       pow3timeout = pow3timeout - 1
+#                       pow3timeoutstr = str(pow3timeout)
+#                       pow3timeoutrender = GAME_FONT.render(pow3timeoutstr, True, black)
+#                       screen.blit(pow3timeoutrender, (950, 29))
                 if keys[pygame.K_f]:
                     if pow4timeout == 0:
                         print("Jailing people")
                         message = "Maybe you will learn your lesson"
                         agreers = agreers + 2
                         townspeople = townspeople - 1
+                        jailed = jailed + 1
                         pow4timeout = 300
+                if pow4timeout > 0:
+                    pow4timeout = pow4timeout - 1
+                    pow4timeoutstr = str(pow4timeout)
+                    pow4timeoutrender = cooldownFont.render(pow4timeoutstr, True, black)
+                    screen.blit(pow4timeoutrender, (860, 29))
                 if keys[pygame.K_o]:
                     policySelect = True
                 if keys[pygame.K_g]:
@@ -268,8 +281,8 @@ while running:
                 if pow5timeout > 0:
                     pow5timeout = pow5timeout - 1
                     pow5timeoutstr = str(pow5timeout)
-                    pow5timeoutrender = GAME_FONT.render(pow5timeoutstr, True, black)
-                    screen.blit(pow5timeoutrender, (950, 60))
+                    pow5timeoutrender = cooldownFont.render(pow5timeoutstr, True, black)
+                    screen.blit(pow5timeoutrender, (907, 29))
 
 
 
@@ -317,10 +330,9 @@ while running:
                 if dissentTimeOut > 0:
                     dissentTimeOut = dissentTimeOut - 1
 #                    print(dissentTimeOut)
+                if jailed == 30:
+                    revolt()
                 
             pygame.display.update()
             #print(agreers)
             clock.tick(60)
-    
-
-            
