@@ -13,6 +13,15 @@ numberFont = pygame.font.Font("Tiny5-Regular.ttf", 24)
 cooldownFont = pygame.font.Font("Tiny5-Regular.ttf", 16)
 running = True
 
+
+
+#Globals
+global townspeople
+global agreers
+global jailed
+global diff
+
+
 #BASIC
 pygame.display.set_caption('Earth Science Final Project')
 clock = pygame.time.Clock()
@@ -70,6 +79,7 @@ def win():
     screen.fill(white)
     winrender = GAME_FONT.render("YOU WIN, YOU HAVE BOILED THE WORLD", True, black)
     screen.blit(winrender, (425, 325))
+    time.sleep(2)
 
 
 
@@ -143,6 +153,7 @@ def revolt():
 
 #Main Loop
 while running:
+
 
     keys = pygame.key.get_pressed()
 
@@ -379,7 +390,6 @@ while running:
                     lose()
                     dissrate = 0
                     running = False
-                    print("Leaving")
                 if agreers >= townspeople:
                     win()
                     running = False
