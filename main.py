@@ -37,13 +37,14 @@ pow4timeout = 0
 pow5timeout = 0
 policySelect = False
 jailed = 0
-oilowned = 1
+oilowned = 0
 downwindmills = 0
 Canso = 0
 noEDU = 0
 changeFromPolicy = 400
+policyTimeout = 0
 
-pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming"]
+pow1messages = ["Oil is good for you, I drink it everyday", "Windmills cause cancer", "Snow disproves Global Warming", "I want to drive my lifted truck"]
 
 
 agreersSTR = str(agreers)
@@ -84,10 +85,12 @@ def oilContracts():
     global agreers
     global oilowned
     global changeFromPolicy
+    global policyTimeout
     townspeople = townspeople - 1
     agreers = agreers + 1
     oilowned = 1
     changeFromPolicy = 350
+    policyTimeout = 2500
 
 
 def teardownWindmills():
@@ -95,10 +98,12 @@ def teardownWindmills():
     global agreers
     global downwindmills
     global changeFromPolicy
+    global policyTimeout
     townspeople = townspeople + 1
     agreers = agreers - 1
     downwindmills = 1
     changeFromPolicy = 325
+    policyTimeout = 2500
 
 def ICanSo():
     global townspeople
@@ -106,21 +111,25 @@ def ICanSo():
     global message
     global Canso
     global changeFromPolicy
+    global policyTimeout
     townspeople = townspeople - 2
     agreers = agreers + 2
     message = "You cant stop me I'm the king"
     Canso = 1
     changeFromPolicy = 300
+    policyTimeout = 2500
 
 def RemoveEducation():
     global townspeople
     global agreers
     global noEDU
     global changeFromPolicy
+    global policyTimeout
     townspeople = townspeople - 1 
     agreers = agreers + 2
     noEDU = 1
     changeFromPolicy = 425
+    policyTimeout = 2500
 
 
 def revolt():
@@ -239,22 +248,26 @@ while running:
                     if oilowned == 1:
                         print("NO")
                     if oilowned == 0:
-                        oilContracts()
+                        if policyTimeout <= 0:
+                            oilContracts()
                 if keys[pygame.K_w]:
                     if downwindmills == 1:
                         print("No")
                     if downwindmills == 0:
-                        teardownWindmills()
+                        if policyTimeout <= 0:
+                            teardownWindmills()
                 if keys[pygame.K_e]:
                     if Canso == 1:
                         print("No")
                     if Canso == 0:
-                        ICanSo()
+                        if policyTimeout <=0:
+                            ICanSo()
                 if keys[pygame.K_r]:
                     if noEDU == 1:
                         print("NO")
                     if noEDU == 0:
-                        RemoveEducation()
+                        if policyTimeout <= 0:
+                            RemoveEducation()
                 if oilowned == 1:
                     screen.blit(owned, (300, 150))
                 if downwindmills == 1:
@@ -281,6 +294,12 @@ while running:
                 dissmessagerend = GAME_FONT.render(dissmessage, True, black)
                 screen.blit(dissmessagerend, (10, 425))
                 agreersSTR = str(agreers)
+                if policyTimeout >= 0:
+                    policyTimeout = policyTimeout - 1
+                    policyTimeoutstr = str(policyTimeout)
+                    policyTimeoutrender = cooldownFont.render(policyTimeoutstr, True, black)
+                    screen.blit(policyTimeoutrender, (950, 29))
+                    
 
 #Abilities/Propaganda/MakeNumberGoUp
 
@@ -359,14 +378,12 @@ while running:
                 if agreers <= 0:
                     lose()
                     dissrate = 0
-                    if elpasedtime == 3:
-                        sys.exit()
-                        print("Leaving")
-                    else:
-                        time.sleep(1)
-                        elpasedtime = elpasedtime + 1
+                    running = False
+                    print("Leaving")
                 if agreers >= townspeople:
                     win()
+                    running = False
+                    print("Leaving")
 
 #Dissenter Chance
                 if dissentTimeOut == 0:
@@ -386,7 +403,7 @@ while running:
                         if distmessagechance == 5:
                             dissmessage = "Oil Refineries spew out toxic gas"
                         if distmessagechance == 6:
-                            dissmessage = "Global Warming causes extermes \n on both ends"
+                            dissmessage = "Global Warming causes extermes"
 
                 if dissentTimeOut > 0:
                     dissentTimeOut = dissentTimeOut - 1
