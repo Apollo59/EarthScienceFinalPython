@@ -70,6 +70,7 @@ def win():
     screen.fill(white)
     winrender = GAME_FONT.render("YOU WIN, YOU HAVE BOILED THE WORLD", True, black)
     screen.blit(winrender, (425, 325))
+    time.sleep(2)
 
 
 
@@ -379,7 +380,6 @@ while running:
                     lose()
                     dissrate = 0
                     running = False
-                    print("Leaving")
                 if agreers >= townspeople:
                     win()
                     running = False
