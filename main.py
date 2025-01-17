@@ -13,6 +13,15 @@ numberFont = pygame.font.Font("Tiny5-Regular.ttf", 24)
 cooldownFont = pygame.font.Font("Tiny5-Regular.ttf", 16)
 running = True
 
+
+
+#Globals
+global townspeople
+global agreers
+global jailed
+global diff
+
+
 #BASIC
 pygame.display.set_caption('Earth Science Final Project')
 clock = pygame.time.Clock()
@@ -144,6 +153,7 @@ def revolt():
 
 #Main Loop
 while running:
+
 
     keys = pygame.key.get_pressed()
 
